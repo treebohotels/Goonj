@@ -1,0 +1,4 @@
+[run]
+omit =
+    goonj/cli.py
+    goonj/version.py
