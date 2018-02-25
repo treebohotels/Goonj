@@ -1,6 +1,4 @@
-
 import abc
-
 
 class BaseChannel(object):
     """

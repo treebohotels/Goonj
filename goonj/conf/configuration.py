@@ -3,8 +3,12 @@
 import logging
 import traceback
 
-import constants
 import yaml
+
+from goonj.conf import constants
+from goonj.conf.db_settings import DBSettings
+from goonj.conf.source_setting import SourceSettings
+from goonj.utils import update_import_paths
 
 
 class Configuration(object):
@@ -14,8 +18,14 @@ class Configuration(object):
 
     def __init__(self, **kwargs):
         """
-        :param test: the test config
-        :param config_file: the path to store configuration
+        :param app_name: the application specific unique name.
+        :param db_type: what is the database type
+        :param db_name: the name of the database
+        :param db_user: user information of the database
+        :param db_password: the password of the database
+        :param db_node: the node of the database
+        :param config_file: the path of the config file
+        :param import_paths: the import path location
         """
 
         # first initialize everything with defaults
@@ -30,8 +40,14 @@ class Configuration(object):
         # now load any run time config change done
         self.set_config(**kwargs)
 
+        self.db = None
+
     def load_with_defaults(self):
-        self.config_file = constants.DEFAULT_CONFIG_FILE
+        self.app_id = constants.DEFAULT_APP_ID
+        self.import_paths = constants.DEFAULT_IMPORT_PATHS
+        self.config_file = constants.DEFAULT_CONFIG_FILE_PATH
+        self.db_setting = DBSettings()
+        update_import_paths(self.import_paths)
 
     def set_config(self, **kwargs):
         """
@@ -39,11 +55,23 @@ class Configuration(object):
         :param kwargs: contains the dict with all key values
         :return: 
         """
-        if 'test' in kwargs:
-            self.test = kwargs['test']
+        if 'app_id' in kwargs:
+            self.app_id = kwargs['app_id']
+
+        if 'import_paths' in kwargs:
+            self.import_paths = kwargs['import_paths']
+            update_import_paths(self.import_paths)
 
         if 'config_file' in kwargs:
             self.config_file = kwargs['config_file']
+
+        if 'db_settings' in kwargs:
+            self.db_settings = DBSettings(kwargs['db_settings'])
+
+        if 'sources' in kwargs:
+            self.sources= SourceSettings(kwargs['sources'])
+
+
 
     def load_from_file(self, file_path):
         logger = logging.getLogger(self.__class__.__name__)
@@ -51,16 +79,18 @@ class Configuration(object):
             with open(file_path, 'r') as stream:
                 loaded_config = yaml.load(stream)
                 self.set_config(**loaded_config)
-        except Exception as e:
+        except FileNotFoundError as e:
             traceback.print_exc()
-            logger.error("Unable to load config file: {0} with exception {1}".format(str(file_path), e.message))
+            logger.error("Unable to load config file: {0} with exception {1}".format(str(file_path), e))
             self.load_with_defaults()
             self.dump_to_file(file_path)
 
     def dump_to_file(self, file_path):
         logger = logging.getLogger(self.__class__.__name__)
         conf_dict = {
-            "test": self.test
+            "app_id": self.app_id,
+            "import_paths": self.import_paths,
+            "db_settings": self.db_setting.get_settings(),
         }
 
         try:

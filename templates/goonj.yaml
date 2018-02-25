@@ -1,1 +1,56 @@
 
+postgres:
+    host: localhost
+    user: sohit
+    passwd: sohit1234
+    db: test
+default_database:
+    host:
+    user:
+    passwd:
+    db:
+
+source_value1:
+  default_channels:
+    email_channel:
+    - value: sohit.kumar@treebohotels.com
+      type:  individual
+    - value: direct.tech@gmail.com
+      type: group
+    slack_channel:
+    - value: hhtp://xyz
+      type: webhook
+    - value: channel_name
+      type: channel
+  sev:
+    high:
+      email_channel:
+      - value: ''
+        type: ''
+      - value: ''
+        type: ''
+      slack_channel:
+      - value: ''
+        type: ''
+      - value: ''
+        type: ''
+    low:
+      email_channel:
+      - value: ''
+        type: ''
+      - value: ''
+        type: ''
+      slack_channel:
+      - value: ''
+        type: ''
+      - value: ''
+        type: ''
+
+
+
+
+
+
+
+
+

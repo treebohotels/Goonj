@@ -1,0 +1,78 @@
+db_settings:
+  db_type: postgres
+  db_host: localhost
+  db_user: sohit
+  db_password: sohit1234
+  db_name: test
+
+sources:
+  source_name1:
+    default_channels:
+      email_channel:
+      - name: ''
+        type: ''
+      - name: ''
+        type: ''
+      slack_channel:
+      - name: ''
+        type: ''
+      - name: ''
+        type: ''
+    sev:
+      high:
+        email_channel:
+        - name: ''
+          type: ''
+        - name: ''
+          type: ''
+        slack_channel:
+        - name: ''
+          type: ''
+        - name: ''
+          type: ''
+      low:
+        email_channel:
+        - name: ''
+          type: ''
+        - name: ''
+          type: ''
+        slack_channel:
+        - name: ''
+          type: ''
+        - name: ''
+          type: ''
+  source_name2:
+    default_channels:
+      email_channel:
+      - name: ''
+        type: ''
+      - name: ''
+        type: ''
+      slack_channel:
+      - name: ''
+        type: ''
+      - name: ''
+        type: ''
+    sev:
+      high:
+        email_channel:
+        - name: ''
+          type: ''
+        - name: ''
+          type: ''
+        slack_channel:
+        - name: ''
+          type: ''
+        - name: ''
+          type: ''
+      low:
+        email_channel:
+        - name: ''
+          type: ''
+        - name: ''
+          type: ''
+        slack_channel:
+        - name: ''
+          type: ''
+        - name: ''
+          type: ''
