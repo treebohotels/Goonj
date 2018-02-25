@@ -12,6 +12,7 @@ class SourceSettings(object):
         return [self.initialize_alert_source(key, value) for key, value in sources.items()]
 
     def initialize_alert_source(self, key, value):
+
         default_channels_obj = self.get_channels(value['default_channels'])
         sev_obj = self.get_sev(value['sev'])
         return AlertSource(key, default_channels_obj, sev_obj)
