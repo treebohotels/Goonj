@@ -10,6 +10,14 @@ class Severity(object):
         self.channels = channels
 
 
+
+
+
+
+
 class Tag(object):
-    def __init__(self, name):
+    def __init__   (self, name):
         self.name = name
+
+
+
