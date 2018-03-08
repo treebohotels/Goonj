@@ -5,74 +5,56 @@ db_settings:
   db_password: sohit1234
   db_name: test
 
+channels:
+  email_channels:
+    - name: sohit
+      to: sohit.kumar@gmail.com
+      subject:
+      from_add: xyz@tech.com
+
+    - name: mohit
+      to:
+      subject:
+      from_add:
+  slack_channels:
+    - name: xyz_channel
+      webhook:
+    - name: zbc_channel
+      webhook:
+
+
 sources:
   source_name1:
     default_channels:
       email_channel:
-      - name: sohit.umar@gmail.com
-        type: individual
-      - name: ''
-        type: ''
+      - sohit
+      - mohit
       slack_channel:
-      - name: www.//
-        type: webhook
-      - name: name1
-        type: auth
+      - xyz_channel
+      - abc_channel
     sev:
       high:
         email_channel:
-        - name: ''
-          type: ''
-        - name: ''
-          type: ''
+        - sohit
         slack_channel:
-        - name: ''
-          type: ''
-        - name: ''
-          type: ''
+        - xyz_channel
       low:
         email_channel:
-        - name: ''
-          type: ''
-        - name: ''
-          type: ''
-        slack_channel:
-        - name: ''
-          type: ''
-        - name: ''
-          type: ''
+        - sohit
   source_name2:
-    default_channels:
+   default_channels:
       email_channel:
-      - name: ''
-        type: ''
-      - name: ''
-        type: ''
+      - sohit
+      - mohit
       slack_channel:
-      - name: ''
-        type: ''
-      - name: ''
-        type: ''
-    sev:
+      - xyz_channel
+      - abc_channel
+   sev:
       high:
         email_channel:
-        - name: ''
-          type: ''
-        - name: ''
-          type: ''
+        - sohit
         slack_channel:
-        - name: ''
-          type: ''
-        - name: ''
-          type: ''
+        - xyz_channel
       low:
         email_channel:
-        - name: ''
-          type: ''
-        - name: ''
-          type: ''
-        slack_channel:
-        - name: ''
-          type: ''
-        - name: ''
-          type: ''
+        - sohit

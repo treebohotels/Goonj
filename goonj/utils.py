@@ -1,7 +1,7 @@
 import json
+import random
 import string
 import sys
-import random
 
 
 def get_filtered_keys(key_list, payload):
@@ -18,7 +18,8 @@ def get_filtered_keys(key_list, payload):
     for key in key_list:
         value = payload.get(key)
         if not value:
-            raise KeyError("Key: {} not present in payload: {} for keylist: {}"
+            raise KeyError(  "Key: {} not present in payload: {} for "
+                             "keylist: {}"
                            .format(key, payload, key_list))
         ret_dict[key] = value
     return ret_dict
@@ -56,6 +57,3 @@ def update_import_paths(import_paths):
 
 def generate_unique_id(size=5):
     return ''.join(random.choice(string.digits) for _ in range(size))
-
-
-

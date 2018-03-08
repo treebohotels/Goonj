@@ -6,7 +6,7 @@ import traceback
 import yaml
 
 from goonj.conf import constants
-from goonj.conf.db_settings import DBSettings
+from goonj.conf.channel_settings import ChannelSettings
 from goonj.conf.source_setting import SourceSettings
 from goonj.utils import update_import_paths
 
@@ -46,7 +46,6 @@ class Configuration(object):
         self.app_id = constants.DEFAULT_APP_ID
         self.import_paths = constants.DEFAULT_IMPORT_PATHS
         self.config_file = constants.DEFAULT_CONFIG_FILE_PATH
-        self.db_setting = DBSettings()
         update_import_paths(self.import_paths)
 
     def set_config(self, **kwargs):
@@ -65,13 +64,11 @@ class Configuration(object):
         if 'config_file' in kwargs:
             self.config_file = kwargs['config_file']
 
-        if 'db_settings' in kwargs:
-            self.db_settings = DBSettings(kwargs['db_settings'])
+        if 'channels' in kwargs:
+            self.channels = ChannelSettings(kwargs['channels'])
 
         if 'sources' in kwargs:
-            self.sources= SourceSettings(kwargs['sources'])
-
-
+            self.sources = SourceSettings(kwargs['sources'], self.channels)
 
     def load_from_file(self, file_path):
         logger = logging.getLogger(self.__class__.__name__)
@@ -81,7 +78,9 @@ class Configuration(object):
                 self.set_config(**loaded_config)
         except FileNotFoundError as e:
             traceback.print_exc()
-            logger.error("Unable to load config file: {0} with exception {1}".format(str(file_path), e))
+            logger.error(
+                "Unable to load config file: {0} with exception {1}".format(
+                    str(file_path), e))
             self.load_with_defaults()
             self.dump_to_file(file_path)
 
@@ -99,4 +98,6 @@ class Configuration(object):
             config_file.close()
         except Exception as e:
             traceback.print_exc()
-            logger.error("Unable to dump config file: {0} with exception {1}".format(str(file_path), e.message))
+            logger.error(
+                "Unable to dump config file: {0} with exception {1}".format(
+                    str(file_path), e.message))
