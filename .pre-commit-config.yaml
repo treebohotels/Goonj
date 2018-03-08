@@ -3,7 +3,6 @@ repos:
     rev: v1.2.3
     hooks:
     -   id: trailing-whitespace
-    -   id: end-of-file-fixer
     -   id: autopep8-wrapper
     -   id: check-docstring-first
     -   id: check-json

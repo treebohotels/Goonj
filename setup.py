@@ -32,7 +32,7 @@ setup(
     author_email='bibek.padhy@treebohotels.com',
     entry_points={
         'console_scripts': [
-            'goonj = goonj.cli:main',
+            'pre-commit install'
 
         ],
     },

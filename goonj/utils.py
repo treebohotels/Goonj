@@ -4,7 +4,7 @@ import string
 import sys
 
 
-def get_filtered_keys(key_list,               payload):
+def get_filtered_keys(key_list, payload):
     """
     Filter the payload for the given keylist and return the filtered dict
     :param key_list: comma seperated keys in string format

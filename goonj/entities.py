@@ -1,3 +1,4 @@
+
 class AlertSource(object):
     def __init__(self, name, default_channels, severity):
         self.name = name
@@ -10,14 +11,6 @@ class Severity(object):
         self.channels = channels
 
 
-
-
-
-
-
 class Tag(object):
-    def __init__   (self, name):
+    def __init__(self, name):
         self.name = name
-
-
-
