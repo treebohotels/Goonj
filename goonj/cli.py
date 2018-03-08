@@ -6,8 +6,6 @@ cli for goonj
 import logging
 
 import click
-import constants
-import os
 
 logging.basicConfig()
 

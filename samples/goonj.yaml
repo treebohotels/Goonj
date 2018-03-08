@@ -1,78 +1,67 @@
 db_settings:
-  db_type: postgres
+  db_type: postgresql
   db_host: localhost
   db_user: sohit
   db_password: sohit1234
   db_name: test
 
+email_settings:
+  host: localhost
+  port:
+  username:
+  password:
+
+
+channels:
+  email_channels:
+    - name: sohit
+      to: sohit.kumar@gmail.com
+      subject:
+      from_add: xyz@tech.com
+
+    - name: mohit
+      to:
+      subject:
+      from_add:
+  slack_channels:
+    - name: xyz_channel
+      webhook: https://hooks.slack.com/services/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
+    - name: abc_channel
+      webhook: https://hooks.slack.com/services/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
+
 sources:
   source_name1:
     default_channels:
-      email_channel:
-      - name: ''
-        type: ''
-      - name: ''
-        type: ''
-      slack_channel:
-      - name: ''
-        type: ''
-      - name: ''
-        type: ''
+      email_channels:
+      - sohit
+      - mohit
+      slack_channels:
+      - xyz_channel
+      - abc_channel
     sev:
+
       high:
-        email_channel:
-        - name: ''
-          type: ''
-        - name: ''
-          type: ''
-        slack_channel:
-        - name: ''
-          type: ''
-        - name: ''
-          type: ''
+        email_channels:
+        - sohit
+        slack_channels:
+        - xyz_channel
       low:
-        email_channel:
-        - name: ''
-          type: ''
-        - name: ''
-          type: ''
-        slack_channel:
-        - name: ''
-          type: ''
-        - name: ''
-          type: ''
+        email_channels:
+        - sohit
   source_name2:
-    default_channels:
-      email_channel:
-      - name: ''
-        type: ''
-      - name: ''
-        type: ''
-      slack_channel:
-      - name: ''
-        type: ''
-      - name: ''
-        type: ''
-    sev:
+   default_channels:
+      email_channels:
+      - sohit
+      - mohit
+      slack_channels:
+      - xyz_channel
+      - abc_channel
+   sev:
       high:
-        email_channel:
-        - name: ''
-          type: ''
-        - name: ''
-          type: ''
-        slack_channel:
-        - name: ''
-          type: ''
-        - name: ''
-          type: ''
-      low:
-        email_channel:
-        - name: ''
-          type: ''
-        - name: ''
-          type: ''
-        slack_channel:
-        - name: ''
-          type: ''
-        - name: ''
-          type: ''
+        email_channels:
+        - sohit
+        slack_channels:
+        - xyz_channel
+        low:
+          email_channels:
+          - sohit

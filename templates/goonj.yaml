@@ -1,56 +1,60 @@
+db_settings:
+  db_type: postgres
+  db_host: localhost
+  db_user: sohit
+  db_password: sohit1234
+  db_name: test
 
-postgres:
-    host: localhost
-    user: sohit
-    passwd: sohit1234
-    db: test
-default_database:
-    host:
-    user:
-    passwd:
-    db:
+channels:
+  email_channels:
+    - name: sohit
+      to: sohit.kumar@gmail.com
+      subject:
+      from_add: xyz@tech.com
 
-source_value1:
-  default_channels:
-    email_channel:
-    - value: sohit.kumar@treebohotels.com
-      type:  individual
-    - value: direct.tech@gmail.com
-      type: group
-    slack_channel:
-    - value: hhtp://xyz
-      type: webhook
-    - value: channel_name
-      type: channel
-  sev:
-    high:
+    - name: mohit
+      to:
+      subject:
+      from_add:
+  slack_channels:
+    - name: xyz_channel
+      webhook:
+    - name: zbc_channel
+      webhook:
+
+
+sources:
+  source_name1:
+    default_channels:
       email_channel:
-      - value: ''
-        type: ''
-      - value: ''
-        type: ''
+      - sohit
+      - mohit
       slack_channel:
-      - value: ''
-        type: ''
-      - value: ''
-        type: ''
-    low:
+      - xyz_channel
+      - abc_channel
+    sev:
+      high:
+        email_channel:
+        - sohit
+        slack_channel:
+        - xyz_channel
+      low:
+        email_channel:
+        - sohit
+  source_name2:
+   default_channels:
       email_channel:
-      - value: ''
-        type: ''
-      - value: ''
-        type: ''
+      - sohit
+      - mohit
       slack_channel:
-      - value: ''
-        type: ''
-      - value: ''
-        type: ''
-
-
-
-
-
-
-
-
-
+      - xyz_channel
+      - abc_channel
+   sev:
+      high:
+        email_channel:
+        - sohit
+        slack_channel:
+        - xyz_channel
+      low:
+        email_channel:
+        - sohit
