@@ -6,8 +6,8 @@ from goonj.exception import EmailChannelNotDefined, SlackChannelNotDefined
 
 class SourceSettings(object):
 
-    def __init__(self, sources, channels):
-        self.alert_sources = self.get_alert_sources(sources, channels)
+    def __init__(self, sources, channels_map):
+        self.alert_sources = self.get_alert_sources(sources, channels_map)
 
     def get_alert_sources(self, sources, channels_map):
         return {key: self.initialize_alert_source(key, value, channels_map) for
@@ -19,15 +19,29 @@ class SourceSettings(object):
 
         :param key: name of the source
         :param value: value of the source
-        :param channels_map: {'channel_type',{'channel_name','channel_object'}
-        :return: intializes alert_Source
+        :param channels_map:
+
+         structure of channel_map looks like below
+         email_channel=
+                    {'email_channle_name1':email_channel_object1,
+                     'email_channle_name2':email_channel_object2}
+         sms_channel=
+                    {'sms_channle_name1':sms_channel_object1,
+                     'sms_channle_name2':smsl_channel_object2}
+
 
         A Source will have sev's{}
         Each sev will have channels associated to it.
         Source will also have list of default channels associate with
 
-        source->Sev->channels
-        source->default_channels->[channels]
+        channel_obj can be object of email_cahnnel_obj,sms_channel_obj etc
+
+        source={
+                'high':[channel_obj1,channel_objj2,channel_obj3],
+                'low' :[channle_obj2,channle_obj4]
+                'default_channels':[channel_obj5]
+
+        }
 
         Channels can be of multiple type email_channel,sms_channel,
         slack_channel
@@ -43,11 +57,27 @@ class SourceSettings(object):
     def get_channels(self, channels, channels_map):
         """
 
-        :param channels: map of {type of channels , [list of names of channels]}
+      :param channels:
+            channels ={
+               'email_channels':['channle_name1',channel_name2],
+               'slack_channels':['channle_name3',channel_name4]
+               }
 
-        :param channels_map: {'channel_type',{'name','channel_object'}
-        :return:   list of channel objects
+      :param channels_map:
+
+      structure of channel_map looks like below
+      email_channel=
+                 {'email_channle_name1':email_channel_object1,
+                  'email_channle_name2':email_channel_object2}
+      sms_channel=
+                 {'sms_channle_name1':sms_channel_object1,
+                  'sms_channle_name2':smsl_channel_object2}
+
+
+      :return: list of channel objects [channel_objec1  (sms_channel),
+         channle_object2  (slack_channel) ,channel_object3  (sms_channel) ]
         """
+
         channels_obj = []
         if constants.CHANNEL_SLACK in channels:
 
@@ -84,10 +114,33 @@ class SourceSettings(object):
         """
 
         :param sev: sev associated with a source
-        :param channels_map:{'channel_type',{'name_of_the_channel',
-        'channel_object'}
-        :return: map of {sev_name , list of channel objects associated with
-        each sev}
+        sev={
+        'high':{
+               'email_channels':['channle_name1',channel_name2],
+               'slack_channels':['channle_name3',channel_name4]
+               },
+        'low':{
+               'email_channels':['channle_name1',channel_name2],
+               'slack_channels':['channle_name3',channel_name4]
+               }
+        }
+        :param
+        structure of channel_map looks like below
+        email_channel=
+                 {'email_channle_name1':email_channel_object1,
+                  'email_channle_name2':email_channel_object2}
+        sms_channel=
+                 {'sms_channle_name1':sms_channel_object1,
+                  'sms_channle_name2':smsl_channel_object2}
+        :return:
+
+        sev={
+        'high':[channel_obj1,channel_objj2,channel_obj3],
+        'low' :[channle_obj2,channle_obj4]
+        }
+
+
+
         """
         sev_obj = {}
         if Sev.LOW.value in sev:

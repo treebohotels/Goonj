@@ -8,12 +8,21 @@ class ChannelSettings(object):
 
     def __init__(self, channels, email_settings, sms_settings):
         """
+        :param channels:
 
-        :param channels: given map of {'channel_type',[list
-        of channel_metadata]}
+        channels={
+        'email_channels':[{'to':'',from_add:'','name':''},   {'to':'',from_add:'','name':''}  ],
+        'slack_channels':[{'webhook:'','name':''},{'webhook:'','name':''}]
+        }
 
-        initializes
-        channel_type(eg email_channels)=[{channel_name,channel_object}]
+        initializes channel_map given below
+        channel_map=(
+        email_channel=
+                 {'email_channle_name1':email_channel_object1,
+                  'email_channle_name2':email_channel_object2}
+        sms_channel=
+                 {'sms_channle_name1':sms_channel_object1,
+                  'sms_channle_name2':smsl_channel_object2} )
 
         """
         if constants.CHANNEL_EMAIL in channels:
