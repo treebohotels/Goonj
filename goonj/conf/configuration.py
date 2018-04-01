@@ -7,6 +7,7 @@ import yaml
 
 from goonj.conf import constants
 from goonj.conf.channel_settings import ChannelSettings
+from goonj.conf.email_sms_settings import EmailSettings, SmsSettings
 from goonj.conf.source_setting import SourceSettings
 from goonj.utils import update_import_paths
 
@@ -64,8 +65,16 @@ class Configuration(object):
         if 'config_file' in kwargs:
             self.config_file = kwargs['config_file']
 
+        if 'email_settings' in kwargs:
+            self.email_settings = EmailSettings(kwargs['email_settings'])
+
+        if 'sms_settings' in kwargs:
+            self.sms_settings = SmsSettings(kwargs['sms_settings'])
+
         if 'channels' in kwargs:
-            self.channels = ChannelSettings(kwargs['channels'])
+            self.channels = ChannelSettings(kwargs['channels'],
+                                            self.email_settings,
+                                            self.sms_settings)
 
         if 'sources' in kwargs:
             self.sources = SourceSettings(kwargs['sources'], self.channels)

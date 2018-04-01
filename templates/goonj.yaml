@@ -1,60 +1,72 @@
-db_settings:
-  db_type: postgres
-  db_host: localhost
-  db_user: sohit
-  db_password: sohit1234
-  db_name: test
+email_settings:
+  smtp_server:
+    host: localhost
+    port: 1025
+    username:
+    password:
+  custom_notification_service: samples.custom_notification_channel.CustomNotificationService
+
+sms_settings:
+  custom_notification_service: samples.custom_notification_channel.CustomNotificationService
 
 channels:
   email_channels:
     - name: sohit
-      to: sohit.kumar@gmail.com
+      to: sohit.kumar@gmail.com,xyz@gmail.com
       subject:
       from_add: xyz@tech.com
 
-    - name: mohit
+    - name: aaaaa
       to:
       subject:
       from_add:
   slack_channels:
     - name: xyz_channel
-      webhook:
-    - name: zbc_channel
-      webhook:
-
+      webhook: https://hooks.slack.com/services/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
+    - name: abc_channel
+      webhook: https://hooks.slack.com/services/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
+  sms_channels:
+    - name : sms1
+      phone_numbers: 8884902333,8884902333
+    - name : sms2
+      phone_numbers: 8884902333
 
 sources:
   source_name1:
-    default_channels:
-      email_channel:
-      - sohit
-      - mohit
-      slack_channel:
-      - xyz_channel
-      - abc_channel
+#    default_channels:
+#      email_channels:
+#      - sohit
+#      - aaaaa
+#      slack_channels:
+#      - xyz_channel
+#      - abc_channel
     sev:
+
       high:
-        email_channel:
+        email_channels:
         - sohit
-        slack_channel:
+        slack_channels:
         - xyz_channel
+        sms_channels:
+        - sms1
+
       low:
-        email_channel:
+        email_channels:
         - sohit
   source_name2:
    default_channels:
-      email_channel:
+      email_channels:
       - sohit
-      - mohit
-      slack_channel:
+      - aaaaa
+      slack_channels:
       - xyz_channel
       - abc_channel
    sev:
       high:
-        email_channel:
+        email_channels:
         - sohit
-        slack_channel:
+        slack_channels:
         - xyz_channel
-      low:
-        email_channel:
-        - sohit
+        low:
+          email_channels:
+          - sohit

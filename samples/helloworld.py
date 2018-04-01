@@ -4,9 +4,10 @@ from goonj.core import get_smart_alert
 
 
 def run_sample():
-    goonj = core.Goonj(config_file_path='goonj.yaml')
+    # initilaize goonj
+    core.Goonj(config_file_path='goonj.yaml')
     x = get_smart_alert('source_name1')
-    x.send(Sev.HIGH, "dsgfds", "subjecr", error_id="1",
+    x.info(Sev.HIGH, "dsgfds", "subjecr", error_id="1", error=None,
            tag_list=["tag1", "tag2"])
     print('wait maadi')
 

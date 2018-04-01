@@ -17,7 +17,6 @@ setup(
     version=get_version(),
     packages=find_packages(exclude=['tests', 'samples']),
     install_requires=[
-        'click>=3.0.0',
         'yml==0.0.1',
         'request==0.0.26',
         'PyYAML==3.12',
@@ -28,14 +27,8 @@ setup(
     ],
     url='',
     license='BSD',
-    author='bkp',
-    author_email='bibek.padhy@treebohotels.com',
-    entry_points={
-        'console_scripts': [
-            'pre-commit install'
-
-        ],
-    },
+    author='sohit kumar,bkp',
+    author_email='sohit.kumar@treebohotels.com',
     test_suite="tests",
     description='A python library to enable easy alerting services across multiple channels.'
 )

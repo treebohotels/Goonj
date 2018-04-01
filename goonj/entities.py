@@ -1,4 +1,3 @@
-
 class AlertSource(object):
     def __init__(self, name, default_channels, severity):
         self.name = name

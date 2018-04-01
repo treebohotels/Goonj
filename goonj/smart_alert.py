@@ -14,53 +14,66 @@ class SmartAlert(object):
         self.name = name
         self.logger = logger
 
-    def warn(self, sev, message, subject, error_id, error,
-             tag_list, *args, **kwargs):
+    def warn(self, sev, message, subject=None, error_id=None, error=None,
+             tag_list=None, *args, **kwargs):
 
         if self.logger is not None:
             self.logger.warn(message, args, kwargs)
-        self.alert(sev, message, subject, error_id, error,
-                   tag_list)
+        self.__alert(sev, message, subject, error_id, error,
+                     tag_list)
 
-    def info(self, sev, message, subject, error_id, error,
-             tag_list, *args, **kwargs):
+    def info(self, sev, message, subject=None, error_id=None, error=None,
+             tag_list=None, *args, **kwargs):
 
         if self.logger is not None:
             self.logger.info(message, args, kwargs)
-        self.alert(sev, message, subject, error_id, error,
-                   tag_list)
+        self.__alert(sev, message, subject, error_id, error,
+                     tag_list)
 
-    def error(self, sev, message, subject, error_id, error,
-              tag_list, *args, **kwargs):
+    def error(self, sev, message, subject=None, error_id=None, error=None,
+              tag_list=None, *args, **kwargs):
         if self.logger is not None:
             self.logger.error(message, args, kwargs)
-        self.alert(sev, message, subject, error_id, error,
-                   tag_list)
+        self.__alert(sev, message, subject, error_id, error,
+                     tag_list)
 
-    def debug(self, sev, message, subject, error_id, error,
-              tag_list, *args, **kwargs):
+    def debug(self, sev, message, subject=None, error_id=None, error=None,
+              tag_list=None, *args, **kwargs):
         if self.logger is not None:
             self.logger.debug(message, args, kwargs)
-        self.alert(sev, message, subject, error_id, error,
-                   tag_list)
+        self.__alert(sev, message, subject, error_id, error,
+                     tag_list)
 
-    def exception(self, sev, message, subject, error_id, error,
-                  tag_list, *args, **kwargs):
+    def exception(self, sev, message, subject=None, error_id=None, error=None,
+                  tag_list=None, *args, **kwargs):
         if self.logger is not None:
             self.logger.exception(message, args, kwargs)
-        self.alert(sev, message, subject, error_id, error,
-                   tag_list)
+        self.__alert(sev, message, subject, error_id, error,
+                     tag_list)
 
-    def alert(self, sev, message, subject=None, error_id=None, error=None,
-              tag_list=None):
+    def __alert(self, sev, message, subject, error_id, error,
+                tag_list):
 
+        if sev is None:  # If no Sev level is defined with alert it will just
+            # act as logging , TODO check this beahviour how it
+            # shoould
+            #  work
+            return
         if not isinstance(sev, Sev):
             raise TypeError('Sev must be an instance of type Sev')
 
-        for channel in self.source.default_channels:
-            channel.send(sev, message, subject, error_id, error,
-                         tag_list)
+            for channel in self.source.default_channels:
+                channel.send(sev, message, subject, error_id, error,
+                             tag_list)
 
-        for channel in self.source.severity[sev.value].channels:
-            channel.send(sev, message, subject, error_id, error,
-                         tag_list)
+        try:
+            severity = self.source.severity[sev.value]
+            for channel in severity.channels:
+                channel.send(sev, message, subject, error_id, error,
+                             tag_list)
+        except KeyError as e:
+            pass
+            # Can supresss this excpetion need to check behaviour
+            # raise ChannelsNotDefinedForSev('Channels are not defined for {} '
+            #                                'sev in config file'
+            #                                ''.format(sev.value))

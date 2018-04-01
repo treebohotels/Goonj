@@ -11,8 +11,8 @@ def get_smart_alert(name, logger=None):
     """
 
     :param name: name of the source
-    :return: if a source is not defined in config file initialize it with
-             list of default_channels
+    :return: source initailized with all the sev's and associated channels
+
     """
     if name in _sources:
         return _sources[name]
@@ -21,7 +21,8 @@ def get_smart_alert(name, logger=None):
         raise GoonjNotInitalized
 
     if goonj.config.sources.alert_sources[name] is None:
-        raise SourceNotDefined
+        raise SourceNotDefined('source {} is not defined in configuration '
+                               'file '.format(name))
 
     _sources[name] = goonj.config.sources.alert_sources[name]
 
