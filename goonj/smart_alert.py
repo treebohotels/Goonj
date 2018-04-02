@@ -1,4 +1,5 @@
 from goonj.conf.constants import Sev
+from goonj.entities import CustomMessage
 
 
 class SmartAlert(object):
@@ -16,38 +17,48 @@ class SmartAlert(object):
 
     def warn(self, sev, message, subject=None, error_id=None, error=None,
              tag_list=None, *args, **kwargs):
+        custom_message = CustomMessage(
+            tag_list, sev.value, message, error, error_id)
 
         if self.logger is not None:
-            self.logger.warn(message, args, kwargs)
+            self.logger.warn(custom_message, args, kwargs)
         self.__alert(sev, message, subject, error_id, error,
                      tag_list)
 
     def info(self, sev, message, subject=None, error_id=None, error=None,
              tag_list=None, *args, **kwargs):
 
+        custom_message = CustomMessage(
+            tag_list, sev.value, message, error, error_id, subject)
         if self.logger is not None:
-            self.logger.info(message, args, kwargs)
+            self.logger.info(custom_message, args, kwargs)
         self.__alert(sev, message, subject, error_id, error,
                      tag_list)
 
     def error(self, sev, message, subject=None, error_id=None, error=None,
               tag_list=None, *args, **kwargs):
+        custom_message = CustomMessage(
+            tag_list, sev.value, message, error, error_id, subject)
         if self.logger is not None:
-            self.logger.error(message, args, kwargs)
+            self.logger.error(custom_message, args, kwargs)
         self.__alert(sev, message, subject, error_id, error,
                      tag_list)
 
     def debug(self, sev, message, subject=None, error_id=None, error=None,
               tag_list=None, *args, **kwargs):
+        custom_message = CustomMessage(
+            tag_list, sev.value, message, error, error_id, subject)
         if self.logger is not None:
-            self.logger.debug(message, args, kwargs)
+            self.logger.debug(custom_message, args, kwargs)
         self.__alert(sev, message, subject, error_id, error,
                      tag_list)
 
     def exception(self, sev, message, subject=None, error_id=None, error=None,
                   tag_list=None, *args, **kwargs):
+        custom_message = CustomMessage(
+            tag_list, sev.value, message, error, error_id, subject)
         if self.logger is not None:
-            self.logger.exception(message, args, kwargs)
+            self.logger.exception(custom_message, args, kwargs)
         self.__alert(sev, message, subject, error_id, error,
                      tag_list)
 

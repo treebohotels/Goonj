@@ -13,3 +13,24 @@ class Severity(object):
 class Tag(object):
     def __init__(self, name):
         self.name = name
+
+
+class CustomMessage(object):
+    __slots__ = ['tags', 'severity', 'message', 'error', 'error_id', 'subject']
+
+    def __init__(self, tags, severity, message, error, error_id, subject):
+        self.tags = tags
+        self.severity = severity
+        self.message = message
+        self.error = error
+        self.error_id = error_id
+        self.subject = subject
+
+    def __str__(self):
+
+        return 'tags:{} , severity:{} , message:{} , error_id:{} , error:{} , subject:{}'.format(self.tags,
+                                                                                                 self.severity,
+                                                                                                 self.message,
+                                                                                                 self.error,
+                                                                                                 self.error_id,
+                                                                                                 self.subject)
