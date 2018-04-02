@@ -1,5 +1,6 @@
 import importlib
 
+from goonj.entities import SmtpServerConfig
 from goonj.exception import CustomNotificationModuleNotFound
 
 
@@ -7,11 +8,14 @@ class EmailSettings(object):
 
     def __init__(self, email_settings):
 
+        self.notification_service = None
+        self.smtp_server_config = None
+
         if 'smtp_server' in email_settings:
-            self.host = email_settings['smtp_server']['host']
-            self.port = email_settings['smtp_server']['port']
-            self.username = email_settings['smtp_server']['username']
-            self.password = email_settings['smtp_server']['password']
+            self.smtp_server_config = SmtpServerConfig(email_settings['smtp_server']['host'],
+                                                       email_settings['smtp_server']['port'],
+                                                       email_settings['smtp_server']['username'],
+                                                       email_settings['smtp_server']['password'])
 
         if 'custom_notification_service' in email_settings:
             custom_notification_service = email_settings[
@@ -38,6 +42,8 @@ class EmailSettings(object):
 class SmsSettings(object):
 
     def __init__(self, sms_settings):
+
+        self.notification_service = None
 
         if 'custom_notification_service' in sms_settings:
             custom_notification_service = sms_settings[

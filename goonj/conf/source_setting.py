@@ -86,7 +86,7 @@ class SourceSettings(object):
                     [channels_map.slack_channels[name] for name in
                      channels[constants.CHANNEL_SLACK]])
             except KeyError as e:
-                raise SlackChannelNotDefined('Slack channel \'{}\' is not '
+                raise SlackChannelNotDefined('Slack channel \'{}\' is used but not '
                                              'defined in configuration file'
                                              ''.format(e.args[0]))
         if constants.CHANNEL_EMAIL in channels:
@@ -95,7 +95,7 @@ class SourceSettings(object):
                     [channels_map.email_channels[name] for name in
                      channels[constants.CHANNEL_EMAIL]])
             except KeyError as e:
-                raise EmailChannelNotDefined('Email channel \'{}\' is not '
+                raise EmailChannelNotDefined('Email channel  \'{}\' is used but not '
                                              'defined in configuration file'
                                              ''.format(e.args[0]))
         if constants.CHANNEL_SMS in channels:
@@ -104,7 +104,7 @@ class SourceSettings(object):
                     [channels_map.sms_channels[name] for name in
                      channels[constants.CHANNEL_SMS]])
             except KeyError as e:
-                raise EmailChannelNotDefined('Sms channel \'{}\' is not '
+                raise EmailChannelNotDefined('Sms channel  \'{}\' is used but not '
                                              'defined in configuration file'
                                              ''.format(e.args[0]))
 

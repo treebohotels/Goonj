@@ -44,3 +44,11 @@ class EmailChannelFromAddressNotDefined(Exception):
 
 class EmailChannelToAddressNotDefined(Exception):
     pass
+
+
+class SMSSettingNotFound(Exception):
+    pass
+
+
+class EmailSettingNotFound(Exception):
+    pass

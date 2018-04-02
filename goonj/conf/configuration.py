@@ -47,14 +47,20 @@ class Configuration(object):
         self.app_id = constants.DEFAULT_APP_ID
         self.import_paths = constants.DEFAULT_IMPORT_PATHS
         self.config_file = constants.DEFAULT_CONFIG_FILE_PATH
+        self.sms_settings = None
+        self.email_settings = None
+        self.channels = None
+
         update_import_paths(self.import_paths)
 
     def set_config(self, **kwargs):
         """
         set config values
-        :param kwargs: contains the dict with all key values
+        :param kwargs: contains the dict read from config file ,with all key
+        values
         :return:
         """
+
         if 'app_id' in kwargs:
             self.app_id = kwargs['app_id']
 
