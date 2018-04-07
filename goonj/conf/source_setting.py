@@ -1,7 +1,7 @@
-from goonj.channels import constants
-from goonj.conf.constants import Sev
+from goonj.conf import constants
 from goonj.entities import AlertSource, Severity
-from goonj.exception import EmailChannelNotDefined, SlackChannelNotDefined
+from goonj.exception import EmailChannelNotDefined, SlackChannelNotDefined, SourceNotInitalized, NoSevDefined, \
+    SlackChannelSettingsNotDefined, EmailChannelSettingsNotDefined, SMSChannelSettingsNotDefined, SevNotSupported
 
 
 class SourceSettings(object):
@@ -45,7 +45,15 @@ class SourceSettings(object):
 
         Channels can be of multiple type email_channel,sms_channel,
         slack_channel
+
         """
+        if not value:
+            raise SourceNotInitalized('Source is not intialized ,If no sevs,channels  are associated initialize it '
+                                      'with None ')
+
+        if value == 'None':
+            return AlertSource(key, None, None)
+
         default_channels_obj = None
         if 'default_channels' in value:
             default_channels_obj = self.get_channels(value['default_channels'],
@@ -79,7 +87,15 @@ class SourceSettings(object):
         """
 
         channels_obj = []
+
+        if not channels:
+            return channels_obj
+
         if constants.CHANNEL_SLACK in channels:
+
+            if not (channels_map and hasattr(channels_map, 'slack_channels')):
+                raise SlackChannelSettingsNotDefined(
+                    'Settings for slack channel is not defined ,please define it ')
 
             try:
                 channels_obj.extend(
@@ -90,6 +106,11 @@ class SourceSettings(object):
                                              'defined in configuration file'
                                              ''.format(e.args[0]))
         if constants.CHANNEL_EMAIL in channels:
+
+            if not (channels_map and hasattr(channels_map, 'email_channels')):
+                raise EmailChannelSettingsNotDefined(
+                    'Settings for email channel is not defined ,please define it ')
+
             try:
                 channels_obj.extend(
                     [channels_map.email_channels[name] for name in
@@ -99,6 +120,10 @@ class SourceSettings(object):
                                              'defined in configuration file'
                                              ''.format(e.args[0]))
         if constants.CHANNEL_SMS in channels:
+
+            if not (channels_map and hasattr(channels_map, 'sms_channels')):
+                raise SMSChannelSettingsNotDefined(
+                    'Settings for sms channel is not defined ,please define it ')
             try:
                 channels_obj.extend(
                     [channels_map.sms_channels[name] for name in
@@ -142,23 +167,19 @@ class SourceSettings(object):
 
 
         """
+
+        if not sev:
+            raise NoSevDefined('No Sevs are defined within \'sev\' in settings file ,define at least one sev ,'
+                               'or remove the sev setting')
+
         sev_obj = {}
-        if Sev.LOW.value in sev:
-            channels_obj = self.get_channels(sev[Sev.LOW.value], channels_map)
-            sev_obj[Sev.LOW.value] = Severity(channels_obj)
 
-        if Sev.MEDIUM.value in sev:
-            channels_obj = self.get_channels(sev[Sev.MEDIUM.value],
-                                             channels_map)
-            sev_obj[Sev.MEDIUM.value] = Severity(channels_obj)
-
-        if Sev.HIGH.value in sev:
-            channels_obj = self.get_channels(sev[Sev.HIGH.value], channels_map)
-            sev_obj[Sev.HIGH.value] = Severity(channels_obj)
-
-        if Sev.CRITICAL.value in sev:
-            channels_obj = self.get_channels(sev[Sev.CRITICAL.value],
-                                             channels_map)
-            sev_obj[Sev.CRITICAL.value] = Severity(channels_obj)
+        for sev_name, sev_value in sev.items():
+            if sev_name in constants.SEV_VALUES:
+                channels_obj = self.get_channels(sev[sev_name], channels_map)
+                sev_obj[sev_name] = Severity(channels_obj)
+            else:
+                raise SevNotSupported(
+                    'Sev {} not supported valid values are low,medium,high,critical '.format(sev_name))
 
         return sev_obj

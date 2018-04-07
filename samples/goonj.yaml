@@ -8,7 +8,7 @@ email_settings:
 
 sms_settings:
   custom_notification_service: samples.custom_notification_channel.CustomNotificationService
-
+#
 channels:
   email_channels:
     - name: sohit
@@ -33,6 +33,7 @@ channels:
 
 sources:
   source_name1:
+
 #    default_channels:
 #      email_channels:
 #      - sohit
@@ -40,8 +41,8 @@ sources:
 #      slack_channels:
 #      - xyz_channel
 #      - abc_channel
-    sev:
-
+     sev:
+#
       high:
         email_channels:
         - sohit

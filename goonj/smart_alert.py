@@ -17,59 +17,46 @@ class SmartAlert(object):
 
     def warn(self, sev, message, subject=None, error_id=None, error=None,
              tag_list=None, *args, **kwargs):
-        custom_message = CustomMessage(
-            tag_list, sev.value, message, error, error_id)
-
-        if self.logger is not None:
-            self.logger.warn(custom_message, args, kwargs)
-        self.__alert(sev, message, subject, error_id, error,
-                     tag_list)
+        self.log_message('warn', sev, message, subject, error_id, error,
+                         tag_list, *args, **kwargs)
 
     def info(self, sev, message, subject=None, error_id=None, error=None,
              tag_list=None, *args, **kwargs):
-
-        custom_message = CustomMessage(
-            tag_list, sev.value, message, error, error_id, subject)
-        if self.logger is not None:
-            self.logger.info(custom_message, args, kwargs)
-        self.__alert(sev, message, subject, error_id, error,
-                     tag_list)
+        self.log_and_alert_message('info', sev, message, subject, error_id, error,
+                                   tag_list, *args, **kwargs)
 
     def error(self, sev, message, subject=None, error_id=None, error=None,
               tag_list=None, *args, **kwargs):
-        custom_message = CustomMessage(
-            tag_list, sev.value, message, error, error_id, subject)
-        if self.logger is not None:
-            self.logger.error(custom_message, args, kwargs)
-        self.__alert(sev, message, subject, error_id, error,
-                     tag_list)
+        self.log_and_alert_message('error', sev, message, subject, error_id, error,
+                                   tag_list, *args, **kwargs)
 
     def debug(self, sev, message, subject=None, error_id=None, error=None,
               tag_list=None, *args, **kwargs):
-        custom_message = CustomMessage(
-            tag_list, sev.value, message, error, error_id, subject)
-        if self.logger is not None:
-            self.logger.debug(custom_message, args, kwargs)
-        self.__alert(sev, message, subject, error_id, error,
-                     tag_list)
+        self.log_and_alert_message('debug', sev, message, subject, error_id, error,
+                                   tag_list, *args, **kwargs)
 
     def exception(self, sev, message, subject=None, error_id=None, error=None,
                   tag_list=None, *args, **kwargs):
-        custom_message = CustomMessage(
-            tag_list, sev.value, message, error, error_id, subject)
+        self.log_and_alert_message('exception', sev, message, subject, error_id, error,
+
+                                   tag_list, *args, **kwargs)
+
+    def log_and_alert_message(self, function_name, sev, message, subject=None, error_id=None, error=None,
+                              tag_list=None, *args, **kwargs):
         if self.logger is not None:
-            self.logger.exception(custom_message, args, kwargs)
-        self.__alert(sev, message, subject, error_id, error,
-                     tag_list)
 
-    def __alert(self, sev, message, subject, error_id, error,
-                tag_list):
+            if sev is None:
+                sev_value = 'No Sev'
+            else:
+                sev_value = sev.value
+                self.__alert(sev, message, subject, error_id, error, tag_list)
 
-        if sev is None:  # If no Sev level is defined with alert it will just
-            # act as logging , TODO check this beahviour how it
-            # shoould
-            #  work
-            return
+            custom_message = CustomMessage(
+                tag_list, sev_value, message, error, error_id, subject)
+            getattr(self.logger, function_name)(custom_message, args, kwargs)
+
+    def __alert(self, sev, message, subject, error_id, error, tag_list):
+
         if not isinstance(sev, Sev):
             raise TypeError('Sev must be an instance of type Sev')
 
@@ -78,10 +65,11 @@ class SmartAlert(object):
                              tag_list)
 
         try:
-            severity = self.source.severity[sev.value]
-            for channel in severity.channels:
-                channel.send(sev, message, subject, error_id, error,
-                             tag_list)
+            if self.source.severity:
+                severity = self.source.severity[sev.value]
+                for channel in severity.channels:
+                    channel.send(sev, message, subject, error_id, error,
+                                 tag_list)
         except KeyError as e:
             pass
             # Can supresss this excpetion need to check behaviour

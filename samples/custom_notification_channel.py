@@ -9,7 +9,7 @@ class CustomNotificationService(BaseCustomEmailNotificationService,
                                 error_id,
                                 error,
                                 tag_list):
-        print('sending custom email')
+        print('sending  email from custom service')
 
     def send_sms_notification(self, phone_numbers, sev, message, subject,
                               error_id,

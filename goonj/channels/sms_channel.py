@@ -69,4 +69,3 @@ class SmsChannel(BaseChannel):
                                                                   tag_list),
                                   kwargs={})
         thread.start()
-        thread.join()

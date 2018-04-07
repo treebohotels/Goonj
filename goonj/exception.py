@@ -52,3 +52,43 @@ class SMSSettingNotFound(Exception):
 
 class EmailSettingNotFound(Exception):
     pass
+
+
+class SourceNotInitalized(Exception):
+    pass
+
+
+class ChannelsNotDefined(Exception):
+    pass
+
+
+class EmailChannelNotDefined(Exception):
+    pass
+
+
+class SlackChannelNotDefined(Exception):
+    pass
+
+
+class SMSChannelNotDefined(Exception):
+    pass
+
+
+class NoSevDefined(Exception):
+    pass
+
+
+class SlackChannelSettingsNotDefined(Exception):
+    pass
+
+
+class EmailChannelSettingsNotDefined(Exception):
+    pass
+
+
+class SMSChannelSettingsNotDefined(Exception):
+    pass
+
+
+class SevNotSupported(Exception):
+    pass

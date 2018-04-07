@@ -30,5 +30,4 @@ setup(
     author='sohit kumar,bkp',
     author_email='sohit.kumar@treebohotels.com',
     test_suite="tests",
-    description='A python library to enable easy alerting services across multiple channels.'
-)
+    description='A python library to enable easy alerting services across multiple channels.')
