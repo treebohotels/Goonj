@@ -49,13 +49,15 @@ class SmartAlert(object):
                 sev_value = 'No Sev'
             else:
                 sev_value = sev.value
-                self.__alert(sev, message, subject, error_id, error, tag_list)
-
-            custom_message = CustomMessage(
-                tag_list, sev_value, message, error, error_id, subject)
-            getattr(self.logger, function_name)(custom_message, args, kwargs)
+            custom_message = CustomMessage(tag_list, sev_value, message, error, error_id, subject)
+            getattr(self.logger, function_name)(custom_message, *args, **kwargs)
+        self.__alert(sev, message, subject, error_id, error, tag_list)
 
     def __alert(self, sev, message, subject, error_id, error, tag_list):
+
+
+        if not sev:
+            return
 
         if not isinstance(sev, Sev):
             raise TypeError('Sev must be an instance of type Sev')

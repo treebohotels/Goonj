@@ -27,7 +27,7 @@ class CustomMessage(object):
         self.subject = subject
 
     def __str__(self):
-        return 'tags:{} , severity:{} , message:{} , error_id:{} , error:{} , subject:{}'.format(self.tags,
+        return 'tags:{} , severity:{} , message:{} , error_id:{} , error:{} , subject:{}'.format(str(self.tags),
                                                                                                  self.severity,
                                                                                                  self.message,
                                                                                                  self.error,

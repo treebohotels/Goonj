@@ -1,10 +1,16 @@
 import logging
+logger = logging.getLogger('myapp')
+hdlr = logging.FileHandler('/Users/sohitkumar/goonj.log')
+formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+hdlr.setFormatter(formatter)
+logger.addHandler(hdlr)
+logger.setLevel(logging.INFO)
 
 from goonj import core
 from goonj.conf.constants import Sev
 from goonj.core import get_smart_alert
 
-logger = logging.getLogger(__name__)
+#logger = logging.getLogger(__name__)
 
 
 def run_sample():
