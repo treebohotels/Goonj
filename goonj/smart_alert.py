@@ -15,33 +15,33 @@ class SmartAlert(object):
         self.name = name
         self.logger = logger
 
-    def warn(self, sev, message, subject=None, error_id=None, error=None,
+    def warn(self, message, sev=None, subject=None, error_id=None, error=None,
              tag_list=None, *args, **kwargs):
-        self.log_message('warn', sev, message, subject, error_id, error,
+        self.log_message('warn', message, sev, subject, error_id, error,
                          tag_list, *args, **kwargs)
 
-    def info(self, sev, message, subject=None, error_id=None, error=None,
+    def info(self, message, sev=None, subject=None, error_id=None, error=None,
              tag_list=None, *args, **kwargs):
-        self.log_and_alert_message('info', sev, message, subject, error_id, error,
+        self.log_and_alert_message('info', message, sev, subject, error_id, error,
                                    tag_list, *args, **kwargs)
 
-    def error(self, sev, message, subject=None, error_id=None, error=None,
+    def error(self, message, sev=None, subject=None, error_id=None, error=None,
               tag_list=None, *args, **kwargs):
-        self.log_and_alert_message('error', sev, message, subject, error_id, error,
+        self.log_and_alert_message('error', message, sev, subject, error_id, error,
                                    tag_list, *args, **kwargs)
 
-    def debug(self, sev, message, subject=None, error_id=None, error=None,
+    def debug(self, message, sev=None, subject=None, error_id=None, error=None,
               tag_list=None, *args, **kwargs):
-        self.log_and_alert_message('debug', sev, message, subject, error_id, error,
+        self.log_and_alert_message('debug', message, sev, subject, error_id, error,
                                    tag_list, *args, **kwargs)
 
-    def exception(self, sev, message, subject=None, error_id=None, error=None,
+    def exception(self, message, sev=None, subject=None, error_id=None, error=None,
                   tag_list=None, *args, **kwargs):
-        self.log_and_alert_message('exception', sev, message, subject, error_id, error,
+        self.log_and_alert_message('exception', message, sev, subject, error_id, error,
 
                                    tag_list, *args, **kwargs)
 
-    def log_and_alert_message(self, function_name, sev, message, subject=None, error_id=None, error=None,
+    def log_and_alert_message(self, function_name, message, sev=None, subject=None, error_id=None, error=None,
                               tag_list=None, *args, **kwargs):
         if self.logger is not None:
 
@@ -54,7 +54,6 @@ class SmartAlert(object):
         self.__alert(sev, message, subject, error_id, error, tag_list)
 
     def __alert(self, sev, message, subject, error_id, error, tag_list):
-
 
         if not sev:
             return
