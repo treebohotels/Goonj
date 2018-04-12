@@ -28,6 +28,6 @@ setup(
     url='',
     license='BSD',
     author='sohit kumar,bkp',
-    author_email='sohit.kumar@treebohotels.com',
+    author_email='sohit.kumar@treebohotels.com,bibek.padhy@treebohotels.com',
     test_suite="tests",
     description='A python library to enable easy alerting services across multiple channels.')

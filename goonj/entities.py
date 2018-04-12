@@ -27,14 +27,17 @@ class CustomMessage(object):
         self.subject = subject
 
     def __str__(self):
-        return 'tags:{} , severity:{} ,subject:{}, message:{} , error_id:{} , error:{}'.format(str(
-            self.tags),
-            self.severity,
-            self.subject,
-            self.message,
-            self.error,
-            self.error_id
-        )
+
+        return '{"subject":"%s","message":"%s","tags":"%s","severity":"%s","error":"%s","error_id":"%s"}'\
+               % (self.subject,
+                  self.message,
+                  self.tags,
+                  self.severity,
+
+                  self.error,
+                  self.error_id,
+
+                  )
 
 
 class SmtpServerConfig(object):
