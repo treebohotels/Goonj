@@ -1,22 +1,64 @@
-
 import logging
-import json
+import threading
+
+import requests
 
 from goonj.channels.base_channel import BaseChannel
+# https://hooks.slack.com/services/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
+from goonj.conf.constants import Sev
+from goonj.exception import SlackChannelNameNotDefined
+
+logger = logging.getLogger(__name__)
 
 
 class SlackChannel(BaseChannel):
 
-    def send(self, severity, subject, body):
+    def __init__(self, **kwargs):
 
-        logger = logging.getLogger(self.__class__.__name__)
+        if 'name' not in kwargs:
+            raise SlackChannelNameNotDefined(
+                'Slack channel name not defined ,\'name\' attribute is '
+                'required')
+
+        if 'webhook' not in kwargs:
+            raise SlackChannelNameNotDefined(
+                'Slack channel webhook not defined ,\'webhook\' attribute is '
+                'required')
+
+        self.name = kwargs['name']
+        self.webhook = kwargs['webhook']
+
+    def send_message(self, sev, message, subject=None, error_id=None,
+                     error=None,
+                     tag_list=None):
+
+        if not isinstance(sev, Sev):
+            raise TypeError('Sev must be an instance of type   Sev')
 
         try:
-            final_text = "{sev}: {sub}"
-        #     url = settings.SLACK_CHANNEL_REVIEW_ALERT_URL
-        #     payload = {"text": '`' + str(settings.ENVIRONMENT).upper() + "`: " + final_text}
-        #     json_string = json.dumps(payload, default=lambda o: o.__dict__)
-        #     headers = {'content-type': 'application/json'}
-        #     requests.post(url, data=json_string, headers=headers)
+            headers = {'content-type': 'application/json'}
+            final_text = "Sev: " + sev.value + "\nsubject: " + subject + \
+                         "\ndescription: " \
+                         "" + message
+
+            requests.post(self.webhook, json={"text": final_text},
+                          headers=headers)
+
         except Exception as e:
             logger.error("Error while alerting in slack(Ignoring) %s", e)
+
+    # should it be asynchronous or synchrnoonus
+    def send(self, sev, message, subject=None, error_id=None,
+             error=None,
+             tag_list=None):
+        if not isinstance(sev, Sev):
+            raise TypeError('Sev must be an instance of type Sev')
+
+        thread = threading.Thread(target=self.send_message, args=(sev, message,
+                                                                  subject,
+                                                                  error_id,
+                                                                  error,
+                                                                  tag_list),
+                                  kwargs={})
+        thread.start()
+        # thread.join()  #no need to wait for notfication thread
