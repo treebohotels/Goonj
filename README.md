@@ -1,4 +1,3 @@
-
 # Goonj  (WORK In Progress -- Comming Soon!!)
 A python library to enable easy alerting services across multiple channels.
 
@@ -55,7 +54,7 @@ email_settings:
   custom_notification_service: samples.module.CustomNotificationService  
 sms_settings:
   custom_notification_service: samples.module.CustomNotificationService
-
+  
 #these are modules for custom notfication that will be called for sending email/sms which extends BaseCustomEmailNotificationService or BaseCustomSMSNotificationService
 ```
 example for CustomNotificationService
@@ -76,13 +75,13 @@ class CustomNotificationService(BaseCustomEmailNotificationService,
         print('Your logic to send  sms here ')
 ```
 
-You can define a source like you do in loggers
-Each source can have different sevs  high medium low and channels assocaited with it
+You can define a source ,Each source can have different sevs ( high medium low)
+and channels assocaited with it
 ```
   source_name1:
      sev:
       high:  
-        email_channels:   Each sev will have diffrent channels associated with it
+        email_channels:   Each sev will have diffrent channels associated with it 
         - sohit
         slack_channels:
         - xyz_channel
@@ -106,15 +105,15 @@ Get alert source , you can inject logger as well and goonj will take care of log
 ```
 
 If you need only looging  
-Use .format to pass string variable instead
+Use .format to pass string variable instead 
 ```
-smart_alert.info("your genreral logging mesage")
+smart_alert.info("your genreral logging mesage {}".format("abc"))
 smart_alert.error("")
 smart_alert.warn()
 smart_alert.exception()
 smart_alert.error()
 ```
-if you need alerting  along iwth logging , pass the sev , it will send alert to channels associated with the given sev in config file
+if you need alerting  along with  logging , pass the sev , it will send alert to channels associated with the given sev in config file 
 ```
 smart_alert.info("your message ",sev=Sev.HIGH,subject="subject for alert")
 smart_alert.error("your message",sev=Sev.HIGH,subject="subject for alert")
@@ -143,4 +142,5 @@ also below are some of the key features which are planed for future releases:
 This project has been inspired to solve basic alerting service requirements.
 
 
-[1]: TBFs
+[1]: TBF
+
