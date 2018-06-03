@@ -1,4 +1,4 @@
-# Goonj  (WORK In Progress -- Comming Soon!!)
+# Goonj  (WORK In Progress)
 A python library to enable easy alerting services across multiple channels.
 
 ## Requirement
