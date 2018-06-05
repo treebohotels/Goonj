@@ -71,3 +71,8 @@ sources:
         low:
           email_channels:
           - sohit
+
+
+error_config:
+  - error_code: 1234
+    threshold:  3

@@ -46,3 +46,10 @@ class SmtpServerConfig(object):
         self.port = port
         self.username = username
         self.password = password
+
+
+class ErrorConfig(object):
+    def __init__(self,error_code,threshold,frequency=None):
+        self.error_code=error_code
+        self.threshold=threshold
+        self.frequency=frequency

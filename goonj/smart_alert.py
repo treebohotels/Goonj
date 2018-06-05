@@ -4,7 +4,7 @@ from goonj.entities import CustomMessage
 
 class SmartAlert(object):
 
-    def __init__(self, name, source, logger=None):
+    def __init__(self, name, source, logger=None,rule_engine=None):
         """
 
         :param name: name of the source
@@ -14,6 +14,7 @@ class SmartAlert(object):
         self.source = source
         self.name = name
         self.logger = logger
+        self.rule_engine=rule_engine
 
     def warn(self, message, sev=None, subject=None, error_id=None, error=None,
              tag_list=None, *args, **kwargs):
@@ -60,6 +61,10 @@ class SmartAlert(object):
 
         if not isinstance(sev, Sev):
             raise TypeError('Sev must be an instance of type Sev')
+
+        if self.rule_engine and not self.rule_engine.is_alerting_required(error_id):
+            return
+
 
             for channel in self.source.default_channels:
                 channel.send(sev, message, subject, error_id, error,

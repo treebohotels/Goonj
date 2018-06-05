@@ -26,7 +26,7 @@ def get_smart_alert(name, logger=None):
 
     _sources[name] = goonj.config.sources.alert_sources[name]
 
-    return SmartAlert(name, _sources[name], logger)
+    return SmartAlert(name, _sources[name], logger,goonj.config.rule_engine)
 
 
 class Goonj(object):
@@ -44,6 +44,6 @@ class Goonj(object):
             return
         self.__initialized = True
         self.config = Configuration(config_file=config_file_path)
-        self.config.email = None
+
 
         goonj = self
