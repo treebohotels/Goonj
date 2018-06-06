@@ -11,7 +11,7 @@ def get_smart_alert(name, logger=None):
     """
 
     :param name: name of the source
-    :return: source initailized with all the sev's and associated channels
+    :return: source initialized with all the sev's and associated channels
 
     """
     if name in _sources:
@@ -24,9 +24,10 @@ def get_smart_alert(name, logger=None):
         raise SourceNotDefined('source {} is not defined in configuration '
                                'file '.format(name))
 
-    _sources[name] = goonj.config.sources.alert_sources[name]
+    _sources[name] = SmartAlert(
+        name, goonj.config.sources.alert_sources[name], logger, goonj.config.rule_engine)
 
-    return SmartAlert(name, _sources[name], logger,goonj.config.rule_engine)
+    return _sources[name]
 
 
 class Goonj(object):
@@ -44,6 +45,5 @@ class Goonj(object):
             return
         self.__initialized = True
         self.config = Configuration(config_file=config_file_path)
-
 
         goonj = self

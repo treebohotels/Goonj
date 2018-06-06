@@ -1,14 +1,12 @@
-from goonj.entities import ErrorConfig
+from goonj.entities import AlertRuleConfig
 
 
-class ErrorConfigSetting(object):
-
-    def __init__(self, error_code_settings):
-        self.error_code_config = {}
-        if error_code_settings and len(error_code_settings) > 0:
-            for error_code_setting in error_code_settings:
-                self.error_code_config[str(error_code_setting['error_code'])] = ErrorConfig(str(error_code_setting[
-                                                                                           'error_code']),
-                                                                                       error_code_setting['threshold'])
-
-
+def get_alert_rule_config(alert_rule_settings):
+    alert_rule_config = {}
+    if alert_rule_settings and len(alert_rule_settings) > 0:
+        for alert_rule_setting in alert_rule_settings:
+            alert_rule_config[str(alert_rule_setting['error_code'])] = AlertRuleConfig(str(alert_rule_setting[
+                                                                                               'error_code']),
+                                                                                       alert_rule_setting[
+                                                                                           'threshold'])
+    return alert_rule_config

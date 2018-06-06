@@ -4,7 +4,7 @@ from goonj.entities import CustomMessage
 
 class SmartAlert(object):
 
-    def __init__(self, name, source, logger=None,rule_engine=None):
+    def __init__(self, name, source, logger=None, rule_engine=None):
         """
 
         :param name: name of the source
@@ -14,7 +14,8 @@ class SmartAlert(object):
         self.source = source
         self.name = name
         self.logger = logger
-        self.rule_engine=rule_engine
+        self.rule_engine = rule_engine
+        self.error_count_map = {}
 
     def warn(self, message, sev=None, subject=None, error_id=None, error=None,
              tag_list=None, *args, **kwargs):
@@ -50,8 +51,10 @@ class SmartAlert(object):
                 sev_value = 'No Sev'
             else:
                 sev_value = sev.value
-            custom_message = CustomMessage(tag_list, sev_value, message, error, error_id, subject)
-            getattr(self.logger, function_name)(custom_message, *args, **kwargs)
+            custom_message = CustomMessage(
+                tag_list, sev_value, message, error, error_id, subject)
+            getattr(self.logger, function_name)(
+                custom_message, *args, **kwargs)
         self.__alert(sev, message, subject, error_id, error, tag_list)
 
     def __alert(self, sev, message, subject, error_id, error, tag_list):
@@ -62,9 +65,13 @@ class SmartAlert(object):
         if not isinstance(sev, Sev):
             raise TypeError('Sev must be an instance of type Sev')
 
-        if self.rule_engine and not self.rule_engine.is_alerting_required(error_id):
-            return
+        if error_id in self.error_count_map:
+            self.error_count_map[error_id] = self.error_count_map[error_id] + 1
+        else:
+            self.error_count_map[error_id] = 1
 
+        if self.rule_engine and not self.rule_engine.is_alerting_required(error_id, self.error_count_map):
+            return
 
             for channel in self.source.default_channels:
                 channel.send(sev, message, subject, error_id, error,

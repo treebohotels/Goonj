@@ -4,10 +4,9 @@ import threading
 import requests
 
 from goonj.channels.base_channel import BaseChannel
-# https://hooks.slack.com/services/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
 from goonj.conf.constants import Sev
 from goonj.exception import SlackChannelNameNotDefined
-from goonj.utils import xstr
+from goonj.utils import empty_string_check
 
 logger = logging.getLogger(__name__)
 
@@ -29,7 +28,6 @@ class SlackChannel(BaseChannel):
         self.name = kwargs['name']
         self.webhook = kwargs['webhook']
 
-
     def send_message(self, sev, message, subject=None, error_id=None,
                      error=None,
                      tag_list=None):
@@ -39,10 +37,14 @@ class SlackChannel(BaseChannel):
 
         try:
             headers = {'content-type': 'application/json'}
-            final_text = "Sev: " + xstr(sev.value) + "\nsubject: " + xstr(subject) + \
-                         "\ndescription: " \
-                         "" + xstr(message)+"\n error_id: "+xstr(error_id)+"\nerror: "+xstr(error)+"\ntags: "+xstr(
-                tag_list)
+            final_text = ''.join(["Sev: ", empty_string_check(sev.value),
+                                  "\nsubject: ", empty_string_check(subject),
+                                  "\ndescription: ", empty_string_check(
+                    message),
+                                  "\n error_id: ", empty_string_check(
+                    error_id),
+                                  "\nerror: ", empty_string_check(error),
+                                  "\ntags: ", empty_string_check(tag_list)])
 
             requests.post(self.webhook, json={"text": final_text},
                           headers=headers)

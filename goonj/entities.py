@@ -27,8 +27,7 @@ class CustomMessage(object):
         self.subject = subject
 
     def __str__(self):
-
-        return '{"subject":"%s","message":"%s","tags":"%s","severity":"%s","error":"%s","error_id":"%s"}'\
+        return '{"subject":"%s","message":"%s","tags":"%s","severity":"%s","error":"%s","error_id":"%s"}' \
                % (self.subject,
                   self.message,
                   self.tags,
@@ -48,8 +47,8 @@ class SmtpServerConfig(object):
         self.password = password
 
 
-class ErrorConfig(object):
-    def __init__(self,error_code,threshold,frequency=None):
-        self.error_code=error_code
-        self.threshold=threshold
-        self.frequency=frequency
+class AlertRuleConfig(object):
+    def __init__(self, error_code, threshold, frequency=None):
+        self.error_code = error_code
+        self.threshold = threshold
+        self.frequency = frequency

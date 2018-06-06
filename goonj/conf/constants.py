@@ -22,7 +22,8 @@ CHANNEL_SMS = "sms_channels"
 CHANNEL_EMAIL = "email_channels"
 CHANNEL_LOGGER = "logger_channels"
 
+
 class Frequency(Enum):
-    DAILY="daily"
-    HOURLY="hourly"
-    MONTHLY="monthly"
+    DAILY = "daily"
+    HOURLY = "hourly"
+    MONTHLY = "monthly"

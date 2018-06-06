@@ -66,7 +66,8 @@ def update_import_paths(import_paths):
 def generate_unique_id(size=5):
     return ''.join(random.choice(string.digits) for _ in range(size))
 
-def xstr(s):
+
+def empty_string_check(s):
     if s is None:
         return ''
     return str(s)
