@@ -1,3 +1,4 @@
+# NOTIFICATION CHANNEL SETTINGS
 email_settings:
   smtp_server:
     host: localhost
@@ -8,7 +9,8 @@ email_settings:
 
 sms_settings:
   custom_notification_service: samples.custom_notification_channel.CustomNotificationService
-#
+
+# CHANNEL DETAILS & CONFIG
 channels:
   email_channels:
     - name: sohit
@@ -31,9 +33,9 @@ channels:
     - name : sms2
       phone_numbers: 8884902333
 
+# SOURCE CONFIG
 sources:
   source_name1:
-
 #    default_channels:
 #      email_channels:
 #      - sohit
@@ -42,7 +44,6 @@ sources:
 #      - xyz_channel
 #      - abc_channel
      sev:
-#
       high:
         email_channels:
         - sohit
@@ -63,11 +64,16 @@ sources:
       - xyz_channel
       - abc_channel
    sev:
+      critical:
+        email_channels:
+        - sohit
+        slack_channels:
+        - xyz_channel
       high:
         email_channels:
         - sohit
         slack_channels:
         - xyz_channel
-        low:
-          email_channels:
-          - sohit
+      low:
+        email_channels:
+        - sohit
