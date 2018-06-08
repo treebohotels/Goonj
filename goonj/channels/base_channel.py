@@ -10,7 +10,7 @@ class BaseChannel(object):
     """
 
     @abc.abstractmethod
-    def send_message(self, sev, message, subject=None, error_id=None, error=None, tag_list=None):
+    def _send_message(self, sev, message, subject=None, error_id=None, error=None, tag_list=None):
         raise NotImplemented
 
     def send(self, sev, message, subject=None, error_id=None, error=None, tag_list=None):
@@ -28,6 +28,6 @@ class BaseChannel(object):
         if not isinstance(sev, Sev):
             raise TypeError('Sev must be an instance of type Sev')
 
-        AsyncProcess.async_processor(self.send_message,
+        AsyncProcess.async_processor(self._send_message,
                                      args=(sev, message, subject, error_id, error, tag_list),
                                      kwargs={})

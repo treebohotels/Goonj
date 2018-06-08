@@ -27,7 +27,7 @@ class SlackChannel(BaseChannel):
         self.name = kwargs['name']
         self.webhook = kwargs['webhook']
 
-    def send_message(self, sev, message, subject=None, error_id=None, error=None, tag_list=None):
+    def _send_message(self, sev, message, subject=None, error_id=None, error=None, tag_list=None):
 
         if not isinstance(sev, Sev):
             raise TypeError('Sev must be an instance of type   Sev')

@@ -74,7 +74,7 @@ class EmailChannel(BaseChannel):
     def register_smtp_server_config(cls, smtp_server_config):
         cls.smtp_server_config = smtp_server_config
 
-    def send_message(self, sev, message, subject=None, error_id=None, error=None, tag_list=None):
+    def _send_message(self, sev, message, subject=None, error_id=None, error=None, tag_list=None):
 
         if not isinstance(sev, Sev):
             raise TypeError('Sev must be an instance of type Sev')
