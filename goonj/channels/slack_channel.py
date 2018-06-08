@@ -1,5 +1,4 @@
 import logging
-import threading
 
 import requests
 
@@ -28,9 +27,7 @@ class SlackChannel(BaseChannel):
         self.name = kwargs['name']
         self.webhook = kwargs['webhook']
 
-    def send_message(self, sev, message, subject=None, error_id=None,
-                     error=None,
-                     tag_list=None):
+    def _send_message(self, sev, message, subject=None, error_id=None, error=None, tag_list=None):
 
         if not isinstance(sev, Sev):
             raise TypeError('Sev must be an instance of type   Sev')
@@ -47,18 +44,4 @@ class SlackChannel(BaseChannel):
         except Exception as e:
             logger.error("Error while alerting in slack(Ignoring) %s", e)
 
-    # should it be asynchronous or synchrnoonus
-    def send(self, sev, message, subject=None, error_id=None,
-             error=None,
-             tag_list=None):
-        if not isinstance(sev, Sev):
-            raise TypeError('Sev must be an instance of type Sev')
 
-        thread = threading.Thread(target=self.send_message, args=(sev, message,
-                                                                  subject,
-                                                                  error_id,
-                                                                  error,
-                                                                  tag_list),
-                                  kwargs={})
-        thread.start()
-        # thread.join()  #no need to wait for notfication thread

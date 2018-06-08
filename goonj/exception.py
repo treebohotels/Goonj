@@ -6,7 +6,7 @@ class SourceNotDefined(Exception):
     pass
 
 
-class InvalidImplemnationOfNotifcationService(Exception):
+class InvalidImplementationOfNotificationService(Exception):
     pass
 
 
@@ -59,14 +59,6 @@ class SourceNotInitalized(Exception):
 
 
 class ChannelsNotDefined(Exception):
-    pass
-
-
-class EmailChannelNotDefined(Exception):
-    pass
-
-
-class SlackChannelNotDefined(Exception):
     pass
 
 

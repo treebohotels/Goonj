@@ -1,11 +1,11 @@
 import email.utils
 import smtplib
-import threading
+
 from email.mime.text import MIMEText
 
 from goonj.channels.base_channel import BaseChannel
 from goonj.conf.constants import Sev
-from goonj.exception import InvalidImplemnationOfNotifcationService, \
+from goonj.exception import InvalidImplementationOfNotificationService, \
     EmailChannelNameNotDefined, EmailChannelFromAddressNotDefined, \
     EmailChannelToAddressNotDefined
 
@@ -62,7 +62,7 @@ class EmailChannel(BaseChannel):
                                                   notification_service):
         if not isinstance(notification_service,
                           BaseCustomEmailNotificationService):
-            raise InvalidImplemnationOfNotifcationService('Custom '
+            raise InvalidImplementationOfNotificationService('Custom '
                                                           'Notification '
                                                           'service should '
                                                           'implement '
@@ -74,9 +74,7 @@ class EmailChannel(BaseChannel):
     def register_smtp_server_config(cls, smtp_server_config):
         cls.smtp_server_config = smtp_server_config
 
-    def send_message(self, sev, message, subject=None, error_id=None,
-                     error=None,
-                     tag_list=None):
+    def _send_message(self, sev, message, subject=None, error_id=None, error=None, tag_list=None):
 
         if not isinstance(sev, Sev):
             raise TypeError('Sev must be an instance of type Sev')
@@ -110,19 +108,3 @@ class EmailChannel(BaseChannel):
                 pass  # check how to handle logging in libraries
             finally:
                 server.quit()
-
-    # send email asynchronously
-    def send(self, sev, message, subject=None, error_id=None,
-             error=None,
-             tag_list=None):
-        if not isinstance(sev, Sev):
-            raise TypeError('Sev must be an instance of type Sev')
-
-        thread = threading.Thread(target=self.send_message, args=(sev, message,
-                                                                  subject,
-                                                                  error_id,
-                                                                  error,
-                                                                  tag_list),
-                                  kwargs={})
-        thread.start()
-        # thread.join()
