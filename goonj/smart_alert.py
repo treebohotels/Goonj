@@ -73,9 +73,8 @@ class SmartAlert(object):
         if self.rule_engine and not self.rule_engine.is_alerting_required(error_id, self.error_count_map):
             return
 
-            for channel in self.source.default_channels:
-                channel.send(sev, message, subject, error_id, error,
-                             tag_list)
+        for channel in self.source.default_channels:
+            channel.send(sev, message, subject, error_id, error, tag_list)
 
         try:
             if self.source.severity:

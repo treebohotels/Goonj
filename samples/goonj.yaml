@@ -73,6 +73,6 @@ sources:
           - sohit
 
 
-error_config:
+alert_config:
   - error_code: 1234
     threshold:  3

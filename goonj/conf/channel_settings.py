@@ -20,16 +20,16 @@ class ChannelSettings(object):
         initializes channel_map given below and add settings to the channels
         channel_map=(
         email_channel=
-                 {'email_channle_name1':email_channel_object1,
-                  'email_channle_name2':email_channel_object2}
+                 {'email_channel_name1':email_channel_object1,
+                  'email_channel_name2':email_channel_object2}
         sms_channel=
-                 {'sms_channle_name1':sms_channel_object1,
-                  'sms_channle_name2':smsl_channel_object2} )
+                 {'sms_channel_name1':sms_channel_object1,
+                  'sms_channel_name2':sms1_channel_object2} )
 
         """
         if not channels:
             raise ChannelsNotDefined('No channels are defined ,define at least one cahnnel within \'channels\' or '
-                                     'remove chennels settign completly if no channel is needed')
+                                     'remove chennels settings completely if no channel is needed')
 
         if constants.CHANNEL_EMAIL in channels:
             self.email_channels = self.get_email_channels(

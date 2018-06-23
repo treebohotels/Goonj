@@ -5,7 +5,7 @@ from goonj.conf.constants import Sev
 from goonj.core import get_smart_alert
 
 logger = logging.getLogger('myapp')
-hdlr = logging.FileHandler('/Users/sohitkumar/goonj.log')
+hdlr = logging.FileHandler('/tmp/var/goonj.log')
 formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
 hdlr.setFormatter(formatter)
 logger.addHandler(hdlr)

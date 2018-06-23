@@ -89,9 +89,9 @@ class Configuration(object):
         if 'sources' in kwargs:
             self.sources = SourceSettings(kwargs['sources'], self.channels)
 
-        if 'error_config' in kwargs:
+        if 'alert_config' in kwargs:
             self.alert_rule_config = get_alert_rule_config(
-                kwargs['error_config'])
+                kwargs['alert_config'])
             self.rule_engine = RuleEngine(self.alert_rule_config)
 
     def load_from_file(self, file_path):
