@@ -10,7 +10,6 @@ from goonj.conf.channel_settings import ChannelSettings
 from goonj.conf.email_sms_settings import EmailSettings, SmsSettings
 from goonj.conf.error_config_setting import get_alert_rule_config
 from goonj.conf.source_setting import SourceSettings
-from goonj.rule_engine import RuleEngine
 from goonj.utils import update_import_paths
 
 
