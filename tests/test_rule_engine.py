@@ -20,12 +20,12 @@ def test_is_time_valid():
 def test_filter_error_time_list_after_prev_alert_time():
     time_list = [datetime.datetime(2010, 1, 25, 4, 48), datetime.datetime(2010, 1, 25, 4, 49),
                  datetime.datetime(2010, 1, 25, 4, 50), datetime.datetime(
-                     2010, 1, 25, 4, 51),
-                 datetime.datetime(2010, 1, 25, 4, 52)]
+        2010, 1, 25, 4, 51),
+        datetime.datetime(2010, 1, 25, 4, 52)]
 
     prev_alert_time = datetime.datetime(2010, 1, 25, 4, 50)
     rule_engine = RuleEngine()
-    rule_engine.filter_error_time_list_after_prev_alert_time(
+    rule_engine.filter_error_time_list_before_prev_alert_time(
         time_list, prev_alert_time)
 
     assert time_list.__len__() == 3

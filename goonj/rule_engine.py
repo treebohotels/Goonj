@@ -12,7 +12,7 @@ class RuleEngine(object):
         if error_time >= prev_alert_time:
             return True
 
-    def filter_error_time_list_after_prev_alert_time(self, error_timestamp_list, prev_alert_time):
+    def filter_error_time_list_before_prev_alert_time(self, error_timestamp_list, prev_alert_time):
         error_timestamp_list[:] = [error_time for error_time in error_timestamp_list if self.is_time_valid(
             error_time, prev_alert_time)]
 
@@ -29,12 +29,14 @@ class RuleEngine(object):
         if error_code in self.alert_rule_config:
 
             frequency = self.alert_rule_config[error_code].frequency
-            base = datetime.datetime.now()
-            prev_alert_time = self.get_prev_alert_time(frequency, base)
-            error_timestamp_list = error_detail_map[error_code].error_timestamp_list
+            if frequency:
 
-            self.filter_error_time_list_after_prev_alert_time(
-                error_timestamp_list, prev_alert_time)
+                base = datetime.datetime.now()
+                prev_alert_time = self.get_prev_alert_time(frequency, base)
+                error_timestamp_list = error_detail_map[error_code].error_timestamp_list
+
+                self.filter_error_time_list_before_prev_alert_time(
+                    error_timestamp_list, prev_alert_time)
 
             if error_timestamp_list.__len__() >= (self.alert_rule_config[error_code].threshold):
                 error_detail_map[error_code].error_count = 0

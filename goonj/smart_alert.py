@@ -90,8 +90,8 @@ class SmartAlert(object):
             if self.source.severity:
                 severity = self.source.severity[sev.value]
                 for channel in severity.channels:
-                    channel.send(sev, message, subject, error_id, error,
-                                 tag_list)
+                    channel.send(sev, message, subject,
+                                 error_id, error, tag_list)
         except KeyError as e:
             pass
             # Can supresss this excpetion need to check behaviour
