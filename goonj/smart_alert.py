@@ -2,11 +2,13 @@ import datetime
 
 from goonj.conf.constants import Sev
 from goonj.entities import CustomMessage, ErrorDetails
+from goonj.rule_engine import RuleEngine
 
 
 class SmartAlert(object):
+    rule_engine = RuleEngine()
 
-    def __init__(self, name, source, logger=None, rule_engine=None):
+    def __init__(self, name, source, logger=None, alert_rule_config=None):
         """
 
         :param name: name of the source
@@ -16,7 +18,7 @@ class SmartAlert(object):
         self.source = source
         self.name = name
         self.logger = logger
-        self.rule_engine = rule_engine
+        self.alert_rule_config = alert_rule_config
         self.error_details_map = {}
 
     def warn(self, message, sev=None, subject=None, error_id=None, error=None,
@@ -79,7 +81,8 @@ class SmartAlert(object):
             self.error_details_map[error_id] = ErrorDetails(
                 1, error_timestamp_list)
 
-        if self.rule_engine and not self.rule_engine.is_alerting_required(error_id, self.error_details_map):
+        if self.rule_engine and not self.rule_engine.is_alerting_required(error_id, self.error_details_map,
+                                                                          self.alert_rule_config):
             return
 
         if self.source.default_channels:

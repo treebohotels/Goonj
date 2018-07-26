@@ -25,7 +25,7 @@ def get_smart_alert(name, logger=None):
                                'file '.format(name))
 
     _sources[name] = SmartAlert(
-        name, goonj.config.sources.alert_sources[name], logger, goonj.config.rule_engine)
+        name, goonj.config.sources.alert_sources[name], logger, goonj.config.alert_rule_config)
 
     return _sources[name]
 

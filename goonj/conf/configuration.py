@@ -53,7 +53,7 @@ class Configuration(object):
         self.email_settings = None
         self.channels = None
         self.error_config = {}
-        self.rule_engine = None
+        self.alert_rule_config = None
 
         update_import_paths(self.import_paths)
 
@@ -92,7 +92,6 @@ class Configuration(object):
         if 'alert_config' in kwargs:
             self.alert_rule_config = get_alert_rule_config(
                 kwargs['alert_config'])
-            self.rule_engine = RuleEngine(self.alert_rule_config)
 
     def load_from_file(self, file_path):
         logger = logging.getLogger(self.__class__.__name__)

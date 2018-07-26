@@ -5,8 +5,6 @@ from croniter import croniter
 
 class RuleEngine(object):
 
-    def __init__(self, alert_rule_config=None):
-        self.alert_rule_config = alert_rule_config
 
     def is_time_valid(self, error_time, prev_alert_time):
         if error_time >= prev_alert_time:
@@ -24,22 +22,20 @@ class RuleEngine(object):
 
         return prev_alert_time
 
-    def is_alerting_required(self, error_code, error_detail_map):
+    def is_alerting_required(self, error_code, error_detail_map, alert_rule_config):
 
-        if error_code in self.alert_rule_config:
+        if alert_rule_config and error_code in alert_rule_config:
 
-            frequency = self.alert_rule_config[error_code].frequency
+            frequency = alert_rule_config[error_code].frequency
             error_timestamp_list = error_detail_map[error_code].error_timestamp_list
             if frequency:
 
                 base = datetime.datetime.now()
                 prev_alert_time = self.get_prev_alert_time(frequency, base)
 
+                self.filter_error_time_list_before_prev_alert_time(error_timestamp_list, prev_alert_time)
 
-                self.filter_error_time_list_before_prev_alert_time(
-                    error_timestamp_list, prev_alert_time)
-
-            if error_timestamp_list.__len__() >= (self.alert_rule_config[error_code].threshold):
+            if error_timestamp_list.__len__() >= (alert_rule_config[error_code].threshold):
                 error_detail_map[error_code].error_count = 0
                 error_detail_map[error_code].error_timestamp_list = []
                 return True
