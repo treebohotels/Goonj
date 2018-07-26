@@ -29,11 +29,12 @@ class RuleEngine(object):
         if error_code in self.alert_rule_config:
 
             frequency = self.alert_rule_config[error_code].frequency
+            error_timestamp_list = error_detail_map[error_code].error_timestamp_list
             if frequency:
 
                 base = datetime.datetime.now()
                 prev_alert_time = self.get_prev_alert_time(frequency, base)
-                error_timestamp_list = error_detail_map[error_code].error_timestamp_list
+
 
                 self.filter_error_time_list_before_prev_alert_time(
                     error_timestamp_list, prev_alert_time)
