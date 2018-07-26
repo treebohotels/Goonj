@@ -52,3 +52,9 @@ class AlertRuleConfig(object):
         self.error_code = error_code
         self.threshold = threshold
         self.frequency = frequency
+
+
+class ErrorDetails(object):
+    def __init__(self, error_count, error_timestamp_list):
+        self.error_count = error_count
+        self.error_timestamp_list = error_timestamp_list

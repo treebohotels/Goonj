@@ -40,14 +40,14 @@ class SlackChannel(BaseChannel):
             final_text = ''.join(["Sev: ", empty_string_check(sev.value),
                                   "\nsubject: ", empty_string_check(subject),
                                   "\ndescription: ", empty_string_check(
-                    message),
-                                  "\n error_id: ", empty_string_check(
-                    error_id),
-                                  "\nerror: ", empty_string_check(error),
-                                  "\ntags: ", empty_string_check(tag_list)])
+                message),
+                "\n error_id: ", empty_string_check(
+                error_id),
+                "\nerror: ", empty_string_check(error),
+                "\ntags: ", empty_string_check(tag_list)])
 
             requests.post(self.webhook, json={"text": final_text},
-                          headers=headers)
+                          headers=headers, timeout=500)
 
         except Exception as e:
             logger.error("Error while alerting in slack(Ignoring) %s", e)
