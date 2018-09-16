@@ -8,6 +8,7 @@ import yaml
 from goonj.conf import constants
 from goonj.conf.channel_settings import ChannelSettings
 from goonj.conf.email_sms_settings import EmailSettings, SmsSettings
+from goonj.conf.error_config_setting import get_alert_rule_config
 from goonj.conf.source_setting import SourceSettings
 from goonj.utils import update_import_paths
 
@@ -50,6 +51,8 @@ class Configuration(object):
         self.sms_settings = None
         self.email_settings = None
         self.channels = None
+        self.error_config = {}
+        self.alert_rule_config = None
 
         update_import_paths(self.import_paths)
 
@@ -84,6 +87,10 @@ class Configuration(object):
 
         if 'sources' in kwargs:
             self.sources = SourceSettings(kwargs['sources'], self.channels)
+
+        if 'alert_config' in kwargs:
+            self.alert_rule_config = get_alert_rule_config(
+                kwargs['alert_config'])
 
     def load_from_file(self, file_path):
         logger = logging.getLogger(self.__class__.__name__)

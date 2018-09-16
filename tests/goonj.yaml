@@ -75,9 +75,4 @@ sources:
 
 alert_config:
   - error_code: 1234
-    frequency: '*/3 * * * *'
     threshold:  3
-
-  - error_code: 3456
-    frequency: '*/5 * * * *'
-    threshold: 3

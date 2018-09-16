@@ -22,7 +22,8 @@ setup(
         'PyYAML==3.12',
         'requests==2.18.4',
         'pre-commit==1.7.0',
-        'pre-commit-hooks==1.2.3 '
+        'pre-commit-hooks==1.2.3',
+        'croniter-0.3.5'
 
     ],
     url='',
